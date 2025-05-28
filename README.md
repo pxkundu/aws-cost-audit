@@ -1,3 +1,5 @@
+![AWS Cost Audit Terminal Demo](docs/aws-audit-demo.png)
+
 # AWS Cost Audit
 [![Deploy to GitHub Pages](https://github.com/pxkundu/aws-cost-audit/actions/workflows/deploy.yml/badge.svg)](https://github.com/pxkundu/aws-cost-audit/actions/workflows/deploy.yml)
 
