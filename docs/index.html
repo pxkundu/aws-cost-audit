@@ -62,6 +62,7 @@
 </head>
 <body>
     <div class="terminal">
+        <div class="ascii-art" id="ascii-art"></div>
         <div id="content"></div>
     </div>
 
@@ -80,7 +81,6 @@
    ╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚═╝   ╚═╝          ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝`;
 
         const demoData = [
-            { type: 'ascii', content: asciiArt },
             { type: 'info', content: 'AWS Cost Audit Terminal - Comprehensive Security and Cost Analysis Tool' },
             { type: 'info', content: 'Version: 1.0.0' },
             { type: 'info', content: 'https://github.com/pxkundu/aws-cost-audit' },
@@ -143,12 +143,12 @@
         }
 
         async function runDemo() {
+            document.getElementById('ascii-art').textContent = asciiArt;
             for (const item of demoData) {
                 await addLine(item.content, item.type);
             }
         }
 
-        // Start the demo when the page loads
         window.onload = runDemo;
     </script>
 </body>

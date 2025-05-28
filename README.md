@@ -1,4 +1,5 @@
 # AWS Cost Audit
+[![Deploy to GitHub Pages](https://github.com/pxkundu/aws-cost-audit/actions/workflows/deploy.yml/badge.svg)](https://github.com/pxkundu/aws-cost-audit/actions/workflows/deploy.yml)
 
 A modular Bash script for auditing AWS costs, designed for enterprise use with interactive profile selection.
 
