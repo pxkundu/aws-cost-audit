@@ -24,9 +24,12 @@
         .ascii-art {
             color: #00ff00;
             white-space: pre;
-            font-size: 12px;
+            font-family: monospace;
+            font-size: 14px;
             line-height: 1.2;
             margin-bottom: 20px;
+            overflow-x: auto;
+            padding: 10px;
         }
         .typing {
             border-right: 2px solid #00ff00;
@@ -63,8 +66,7 @@
     </div>
 
     <script>
-        const asciiArt = `
-    █████╗ ██╗    ██╗███████╗
+        const asciiArt = `    █████╗ ██╗    ██╗███████╗
    ██╔══██╗██║    ██║██╔════╝
    ███████║██║ █╗ ██║███████╗
    ██╔══██║██║███╗██║╚════██║
