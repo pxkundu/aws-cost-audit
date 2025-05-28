@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Cost Audit Terminal Demo</title>
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .terminal {
+            background-color: #000;
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+        }
+        .ascii-art {
+            color: #00ff00;
+            white-space: pre;
+            font-size: 12px;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        .typing {
+            border-right: 2px solid #00ff00;
+            animation: blink 1s step-end infinite;
+        }
+        .success { color: #00ff00; }
+        .warning { color: #ffff00; }
+        .error { color: #ff0000; }
+        .info { color: #00ffff; }
+        .highlight { color: #ff00ff; }
+        @keyframes blink {
+            from, to { border-color: transparent }
+            50% { border-color: #00ff00; }
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #333;
+            border-radius: 10px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress {
+            width: 0%;
+            height: 100%;
+            background-color: #00ff00;
+            transition: width 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal">
+        <div id="content"></div>
+    </div>
+
+    <script>
+        const asciiArt = `
+    █████╗ ██╗    ██╗███████╗
+   ██╔══██╗██║    ██║██╔════╝
+   ███████║██║ █╗ ██║███████╗
+   ██╔══██║██║███╗██║╚════██║
+   ██║  ██║╚███╔███╔╝███████║
+   ╚═╝  ╚═╝ ╚══╝╚══╝ ╚══════╝
+    █████╗ ██╗   ██╗██████╗ ██╗████████╗    ████████╗███████╗██████╗ ███╗   ███╗██╗███╗   ██╗ █████╗ ██╗
+   ██╔══██╗██║   ██║██╔══██╗██║╚══██╔══╝    ╚══██╔══╝██╔════╝██╔══██╗████╗ ████║██║████╗  ██║██╔══██╗██║
+   ███████║██║   ██║██║  ██║██║   ██║          ██║   █████╗  ██████╔╝██╔████╔██║██║██╔██╗ ██║███████║██║
+   ██╔══██║██║   ██║██║  ██║██║   ██║          ██║   ██╔══╝  ██╔══██╗██║╚██╔╝██║██║██║╚██╗██║██╔══██║██║
+   ██║  ██║╚██████╔╝██████╔╝██║   ██║          ██║   ███████╗██║  ██║██║ ╚═╝ ██║██║██║ ╚████║██║  ██║███████╗
+   ╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚═╝   ╚═╝          ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝`;
+
+        const demoData = [
+            { type: 'ascii', content: asciiArt },
+            { type: 'info', content: 'AWS Cost Audit Terminal - Comprehensive Security and Cost Analysis Tool' },
+            { type: 'info', content: 'Version: 1.0.0' },
+            { type: 'info', content: 'https://github.com/pxkundu/aws-cost-audit' },
+            { type: 'info', content: '===============================================' },
+            { type: 'info', content: '🔍 Select an AWS Profile or add a new one:' },
+            { type: 'info', content: '1) default' },
+            { type: 'info', content: '2) production' },
+            { type: 'info', content: '3) development' },
+            { type: 'info', content: '4) Add new profile' },
+            { type: 'success', content: '✅ Selected AWS Profile: default' },
+            { type: 'info', content: '🌟 AWS Cost Audit Started on ' + new Date().toLocaleString() },
+            { type: 'info', content: '📛 Account: 123456789012 | 📍 Region: us-east-1 | 🔑 Profile: default' },
+            { type: 'info', content: '==============================' },
+            { type: 'info', content: '--- 📊 Budget Alerts Check ---' },
+            { type: 'warning', content: '⚠️ Found 3 budget alerts exceeding thresholds' },
+            { type: 'info', content: '--- 📊 Instance Optimization Check ---' },
+            { type: 'success', content: '✅ All instances are properly sized' },
+            { type: 'info', content: '--- 📊 Security Audit Check ---' },
+            { type: 'error', content: '🚨 Found 2 security groups with open ports' },
+            { type: 'info', content: '--- 📊 Untagged Resources Check ---' },
+            { type: 'warning', content: '⚠️ Found 5 resources without proper tags' },
+            { type: 'info', content: '--- 📊 Idle EC2 Instances Check ---' },
+            { type: 'warning', content: '⚠️ Found 2 idle EC2 instances' },
+            { type: 'info', content: '--- 📊 S3 Lifecycle Policies Check ---' },
+            { type: 'success', content: '✅ All S3 buckets have lifecycle policies' },
+            { type: 'info', content: '--- 📊 Old RDS Snapshots Check ---' },
+            { type: 'warning', content: '⚠️ Found 3 old RDS snapshots' },
+            { type: 'info', content: '--- 📊 Forgotten EBS Volumes Check ---' },
+            { type: 'error', content: '🚨 Found 4 unattached EBS volumes' },
+            { type: 'info', content: '--- 📊 Data Transfer Risks Check ---' },
+            { type: 'success', content: '✅ No data transfer risks detected' },
+            { type: 'info', content: '--- 📊 On-Demand EC2 Instances Check ---' },
+            { type: 'warning', content: '⚠️ Found 3 instances that could be reserved' },
+            { type: 'info', content: '--- 📊 Idle Load Balancers Check ---' },
+            { type: 'success', content: '✅ No idle load balancers found' },
+            { type: 'info', content: '--- 📊 Unused AMIs Check ---' },
+            { type: 'warning', content: '⚠️ Found 5 unused AMIs' },
+            { type: 'info', content: '=== 🌟 Summary of Findings ===' },
+            { type: 'highlight', content: 'Total Checks: 12' },
+            { type: 'success', content: '✅ Passed: 4' },
+            { type: 'warning', content: '⚠️ Warnings: 7' },
+            { type: 'error', content: '🚨 Critical: 1' },
+            { type: 'info', content: '📄 Summary report saved to reports/summary_report_' + new Date().toISOString().slice(0,19).replace(/[:]/g, '') + '.txt' },
+            { type: 'success', content: '✅ AWS Cost Audit Completed' }
+        ];
+
+        function typeWriter(element, text, index = 0) {
+            if (index < text.length) {
+                element.innerHTML += text.charAt(index);
+                setTimeout(() => typeWriter(element, text, index + 1), 20);
+            }
+        }
+
+        function addLine(content, type) {
+            const line = document.createElement('div');
+            line.className = type;
+            document.getElementById('content').appendChild(line);
+            typeWriter(line, content);
+            return new Promise(resolve => setTimeout(resolve, content.length * 20 + 500));
+        }
+
+        async function runDemo() {
+            for (const item of demoData) {
+                await addLine(item.content, item.type);
+            }
+        }
+
+        // Start the demo when the page loads
+        window.onload = runDemo;
+    </script>
+</body>
+</html> 
