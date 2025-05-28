@@ -1,0 +1,6 @@
+[1;32m🌟 [INFO][0m 🔍 Select an AWS Profile or add a new one:
+1) default
+2) awsprofile2
+3) Add new profile
+Enter the number of the AWS profile (or select 'Add new profile'): [1;32m🌟 [INFO][0m ✅ Selected AWS Profile: awsprofile2
+[1;31m🚨 [ERROR][0m 🚨 Failed to retrieve AWS Account ID. Check AWS CLI configuration and credentials.

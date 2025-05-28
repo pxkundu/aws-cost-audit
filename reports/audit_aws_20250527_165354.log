@@ -1,0 +1,5 @@
+[1;32m🌟 [INFO][0m 🔍 Select an AWS Profile to use for the audit:
+1) default
+Enter the number of the AWS profile: 1) default
+Enter the number of the AWS profile: [1;32m🌟 [INFO][0m ✅ Selected AWS Profile: default
+[1;31m🚨 [ERROR][0m 🚨 Failed to retrieve AWS Account ID. Check AWS CLI configuration and credentials.

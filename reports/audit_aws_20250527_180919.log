@@ -1,0 +1,7 @@
+[1;32m🌟 [INFO][0m 🔍 Select an AWS Profile or add a new one:
+1) default
+2) Add new profile
+Enter the number of the AWS profile (or select 'Add new profile'): [1;32m🌟 [INFO][0m 🌟 Adding a new AWS profile...
+Enter new profile name: Enter AWS Access Key ID: Enter AWS Secret Access Key: 
+Enter default region (e.g., us-east-1) [us-east-1]: [1;32m🌟 [INFO][0m ✅ New profile 'awsprofile2' created and selected.
+[1;31m🚨 [ERROR][0m 🚨 Failed to retrieve AWS Account ID. Check AWS CLI configuration and credentials.
